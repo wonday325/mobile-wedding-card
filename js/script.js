@@ -161,12 +161,12 @@ const restaurantList = [
   }
 ];
 
-// 예식장 좌표 (대구시청 기준, 실제 예식장 주소로 변경하세요)
+// 예식장 좌표 (대구 동구 동촌로 316, M스타하우스웨딩&컨벤션)
 const venueCoords = {
-  lat: 35.8714,
-  lng: 128.5949,
-  name: "대구 예식장",
-  address: "대구광역시 중구 국채보상로 2가"
+  lat: 35.8875,
+  lng: 128.6298,
+  name: "M스타하우스웨딩&컨벤션",
+  address: "대구 동구 동촌로 316"
 };
 
 const openButton = document.getElementById("open-restaurants");
