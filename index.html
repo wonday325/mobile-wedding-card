@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>모바일 청첩장</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="page-container">
+      <section class="hero-card">
+        <p class="eyebrow">우리의 특별한 날에 초대합니다</p>
+        <h1>Mobile Wedding Card</h1>
+        <p class="message">
+          소중한 분들을 위해 준비한 모바일 청첩장입니다. 함께 해주시면
+          큰 기쁨이 될게요.
+        </p>
+      </section>
+
+      <section class="section-card">
+        <div class="section-header">
+          <h2>오시는 길</h2>
+          <p>예식장 위치와 주변 맛집을 한눈에 확인하세요.</p>
+        </div>
+        <div class="map-card">
+          <div class="map-placeholder">지도 영역</div>
+        </div>
+        <button id="open-restaurants" class="primary-button" type="button">
+          맛집 리스트 보기
+        </button>
+      </section>
+
+      <section class="section-card">
+        <div class="section-header">
+          <h2>마음 전하실 곳</h2>
+          <p>축하 메시지 또는 계좌번호를 안전하게 복사하세요.</p>
+        </div>
+        <div class="payment-card">
+          <div>
+            <p class="label">계좌 정보</p>
+            <p class="payment-detail">국민은행 123456-78-901234 김신랑</p>
+          </div>
+          <button id="copy-account" class="secondary-button" type="button">
+            계좌번호 복사
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div id="dimmed" class="dimmed"></div>
+    <aside id="bottom-sheet" class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3>추천 맛집</h3>
+        <button id="close-sheet" class="icon-button" type="button" aria-label="닫기">
+          ✕
+        </button>
+      </div>
+      <div id="restaurant-list" class="restaurant-list"></div>
+    </aside>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
