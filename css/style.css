@@ -104,6 +104,30 @@ h1 {
   border-top: 1px solid rgba(212, 165, 116, 0.2);
 }
 
+.couple-names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.groom {
+  color: var(--color-accent);
+}
+
+.bride {
+  color: #d4a5b8;
+}
+
+.separator {
+  font-size: 1rem;
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
 .info-item {
   display: flex;
   flex-direction: column;
@@ -221,6 +245,30 @@ h1 {
   justify-content: space-between;
   gap: 16px;
   padding: 20px 24px;
+}
+
+.payment-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.copy-btn {
+  padding: 10px 16px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: var(--color-accent);
+  transform: translateY(-1px);
 }
 
 .label {

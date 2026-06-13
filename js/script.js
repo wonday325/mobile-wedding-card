@@ -174,7 +174,7 @@ const closeButton = document.getElementById("close-sheet");
 const dimmed = document.getElementById("dimmed");
 const bottomSheet = document.getElementById("bottom-sheet");
 const restaurantContainer = document.getElementById("restaurant-list");
-const copyButton = document.getElementById("copy-account");
+const copyButtons = document.querySelectorAll(".copy-btn");
 const naverMapBtn = document.getElementById("naver-map");
 const kakaoMapBtn = document.getElementById("kakao-map");
 const tmapBtn = document.getElementById("tmap-map");
@@ -199,8 +199,7 @@ function renderRestaurants() {
     .join("");
 }
 
-function copyAccount() {
-  const accountText = "국민은행 123456-78-901234 김신랑";
+function copyAccount(accountText) {
   navigator.clipboard.writeText(accountText).then(() => {
     alert("계좌번호가 복사되었습니다.");
   });
@@ -246,7 +245,12 @@ function openTmap() {
 openButton.addEventListener("click", () => toggleSheet(true));
 closeButton.addEventListener("click", () => toggleSheet(false));
 dimmed.addEventListener("click", () => toggleSheet(false));
-copyButton.addEventListener("click", copyAccount);
+copyButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const accountText = btn.dataset.account;
+    copyAccount(accountText);
+  });
+});
 naverMapBtn.addEventListener("click", openNaverMap);
 kakaoMapBtn.addEventListener("click", openKakaoMap);
 tmapBtn.addEventListener("click", openTmap);

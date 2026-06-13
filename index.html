@@ -17,6 +17,11 @@
           큰 기쁨이 될게요.
         </p>
         <div class="wedding-info">
+          <div class="couple-names">
+            <span class="groom">신재원</span>
+            <span class="separator">&</span>
+            <span class="bride">권은비</span>
+          </div>
           <div class="info-item">
             <span class="info-label">📅 일시</span>
             <span class="info-value">2026년 10월 10일 (토) 오후 1시 40분</span>
@@ -63,14 +68,25 @@
           <h2>마음 전하실 곳</h2>
           <p>축하 메시지 또는 계좌번호를 안전하게 복사하세요.</p>
         </div>
-        <div class="payment-card">
-          <div>
-            <p class="label">계좌 정보</p>
-            <p class="payment-detail">국민은행 123456-78-901234 김신랑</p>
+        <div class="payment-cards">
+          <div class="payment-card">
+            <div>
+              <p class="label">신랑 신재원</p>
+              <p class="payment-detail">국민은행 123-456-78-901234</p>
+            </div>
+            <button class="copy-btn" data-account="국민은행 123-456-78-901234 신재원" type="button">
+              복사
+            </button>
           </div>
-          <button id="copy-account" class="secondary-button" type="button">
-            계좌번호 복사
-          </button>
+          <div class="payment-card">
+            <div>
+              <p class="label">신부 권은비</p>
+              <p class="payment-detail">국민은행 234-567-89-012345</p>
+            </div>
+            <button class="copy-btn" data-account="국민은행 234-567-89-012345 권은비" type="button">
+              복사
+            </button>
+          </div>
         </div>
       </section>
     </main>
