@@ -19,12 +19,23 @@ const restaurantList = [
   }
 ];
 
+// 예식장 좌표 (서울시청 기준, 실제 예식장 주소로 변경하세요)
+const venueCoords = {
+  lat: 37.5665,
+  lng: 126.9780,
+  name: "예식장",
+  address: "서울시 중구 태평로 1"
+};
+
 const openButton = document.getElementById("open-restaurants");
 const closeButton = document.getElementById("close-sheet");
 const dimmed = document.getElementById("dimmed");
 const bottomSheet = document.getElementById("bottom-sheet");
 const restaurantContainer = document.getElementById("restaurant-list");
 const copyButton = document.getElementById("copy-account");
+const naverMapBtn = document.getElementById("naver-map");
+const kakaoMapBtn = document.getElementById("kakao-map");
+const tmapBtn = document.getElementById("tmap-map");
 
 function toggleSheet(show) {
   bottomSheet.classList.toggle("show", show);
@@ -53,9 +64,49 @@ function copyAccount() {
   });
 }
 
+function openNaverMap() {
+  const appUrl = `nmap://navigate?lat=${venueCoords.lat}&lng=${venueCoords.lng}&name=${encodeURIComponent(venueCoords.name)}`;
+  const webUrl = `https://map.naver.com/p/search/${encodeURIComponent(venueCoords.name)}/address`;
+  
+  // 앱이 설치되어 있는지 확인하기 위해 앱 링크 시도
+  const timer = setTimeout(() => {
+    window.location.href = webUrl;
+  }, 1000);
+  
+  window.location.href = appUrl;
+  setTimeout(() => clearTimeout(timer), 100);
+}
+
+function openKakaoMap() {
+  const appUrl = `kakaomap://look?p=${venueCoords.lat},${venueCoords.lng}`;
+  const webUrl = `https://map.kakao.com/link/map/${encodeURIComponent(venueCoords.name)},${venueCoords.lat},${venueCoords.lng}`;
+  
+  const timer = setTimeout(() => {
+    window.location.href = webUrl;
+  }, 1000);
+  
+  window.location.href = appUrl;
+  setTimeout(() => clearTimeout(timer), 100);
+}
+
+function openTmap() {
+  const appUrl = `tmap://search?name=${encodeURIComponent(venueCoords.name)}&lon=${venueCoords.lng}&lat=${venueCoords.lat}`;
+  const webUrl = `https://map.tmap.co.kr/map/search/${encodeURIComponent(venueCoords.name)}`;
+  
+  const timer = setTimeout(() => {
+    window.location.href = webUrl;
+  }, 1000);
+  
+  window.location.href = appUrl;
+  setTimeout(() => clearTimeout(timer), 100);
+}
+
 openButton.addEventListener("click", () => toggleSheet(true));
 closeButton.addEventListener("click", () => toggleSheet(false));
 dimmed.addEventListener("click", () => toggleSheet(false));
 copyButton.addEventListener("click", copyAccount);
+naverMapBtn.addEventListener("click", openNaverMap);
+kakaoMapBtn.addEventListener("click", openKakaoMap);
+tmapBtn.addEventListener("click", openTmap);
 
 renderRestaurants();
