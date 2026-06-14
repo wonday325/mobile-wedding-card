@@ -478,6 +478,28 @@ h1 {
   padding-right: 4px;
 }
 
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.tab-button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.8);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #d4a574 0%, #c17a5c 100%);
+  color: var(--color-white);
+  border-color: rgba(212,165,116,0.2);
+}
+
 .restaurant-list::-webkit-scrollbar {
   width: 6px;
 }

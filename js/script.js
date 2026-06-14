@@ -1,164 +1,28 @@
 const restaurantList = [
-  {
-    name: "칠성시장 불고기",
-    category: "불고기/구이",
-    desc: "대구를 대표하는 칠성시장의 신선한 불고기와 모둠구이",
-    link: "https://map.kakao.com/?q=대구%20칠성시장",
-    lat: 35.8783,
-    lng: 128.5989
-  },
-  {
-    name: "대구 막창골목",
-    category: "막창/곱창",
-    desc: "싱싱한 막창과 곱창을 즐길 수 있는 대구의 명소",
-    link: "https://map.kakao.com/?q=대구%20막창골목",
-    lat: 35.8464,
-    lng: 128.5680
-  },
-  {
-    name: "약로 국밥거리",
-    category: "국밥",
-    desc: "대구 최고의 국밥 골목, 돼지국밥과 소머리국밥",
-    link: "https://map.kakao.com/?q=대구%20약로",
-    lat: 35.8738,
-    lng: 128.5897
-  },
-  {
-    name: "동인동 야시장",
-    category: "야시장",
-    desc: "저녁부터 시작되는 대구의 대표 야시장, 다양한 음식",
-    link: "https://map.kakao.com/?q=대구%20동인동%20야시장",
-    lat: 35.8827,
-    lng: 128.5961
-  },
-  {
-    name: "대구 짬뽕골목",
-    category: "짬뽕",
-    desc: "매콤한 맛이 일품인 대구식 짬뽕 전문거리",
-    link: "https://map.kakao.com/?q=대구%20짬뽕골목",
-    lat: 35.8770,
-    lng: 128.5920
-  },
-  {
-    name: "서문시장 음식광장",
-    category: "한식",
-    desc: "100년 전통의 서문시장에서 즐기는 대구 음식",
-    link: "https://map.kakao.com/?q=대구%20서문시장",
-    lat: 35.8853,
-    lng: 128.5870
-  },
-  {
-    name: "침산동 우육탕거리",
-    category: "우육탕",
-    desc: "대구만의 특별한 음식, 우육탕(우육면)의 명소",
-    link: "https://map.kakao.com/?q=대구%20침산동%20우육탕",
-    lat: 35.9120,
-    lng: 128.6300
-  },
-  {
-    name: "범어네거리",
-    category: "한식/양식",
-    desc: "대학가의 감성있는 맛집들이 모여있는 거리",
-    link: "https://map.kakao.com/?q=대구%20범어네거리",
-    lat: 35.8660,
-    lng: 128.6370
-  },
-  {
-    name: "오동동 음식거리",
-    category: "한식",
-    desc: "전통 한식과 현지 음식이 함께하는 거리",
-    link: "https://map.kakao.com/?q=대구%20오동동",
-    lat: 35.8780,
-    lng: 128.6200
-  },
-  {
-    name: "반월당 카페거리",
-    category: "카페/디저트",
-    desc: "감성적인 카페와 디저트 숍이 많은 특별한 거리",
-    link: "https://map.kakao.com/?q=대구%20반월당",
-    lat: 35.8770,
-    lng: 128.6100
-  },
-  {
-    name: "평리골목 닭꼬치",
-    category: "닭꼬치",
-    desc: "대구의 숨은 맛집, 신선한 닭꼬치 전문점",
-    link: "https://map.kakao.com/?q=대구%20평리골목",
-    lat: 35.8710,
-    lng: 128.5750
-  },
-  {
-    name: "수성못 음식점",
-    category: "한식/양식",
-    desc: "아름다운 수성못 주변의 감성있는 식당들",
-    link: "https://map.kakao.com/?q=대구%20수성못",
-    lat: 35.8520,
-    lng: 128.6520
-  },
-  {
-    name: "대구 돼지국밥",
-    category: "국밥",
-    desc: "정성스럽게 끓인 돼지국밥, 대구 아침 문화의 중심",
-    link: "https://map.kakao.com/?q=대구%20돼지국밥",
-    lat: 35.8750,
-    lng: 128.5900
-  },
-  {
-    name: "종로거리 음식점",
-    category: "한식/일식",
-    desc: "오래된 전통과 새로운 트렌드가 만나는 거리",
-    link: "https://map.kakao.com/?q=대구%20종로거리",
-    lat: 35.8800,
-    lng: 128.5880
-  },
-  {
-    name: "이월드 레스토랑 거리",
-    category: "양식/한식",
-    desc: "동궁동의 멋진 야경을 보며 식사할 수 있는 곳",
-    link: "https://map.kakao.com/?q=대구%20이월드%20레스토랑",
-    lat: 35.8850,
-    lng: 128.6450
-  },
-  {
-    name: "중앙로데오거리 카페",
-    category: "카페/스낵",
-    desc: "젊은이들이 즐겨 찾는 트렌디한 카페거리",
-    link: "https://map.kakao.com/?q=대구%20중앙로데오",
-    lat: 35.8730,
-    lng: 128.5950
-  },
-  {
-    name: "청라언덕 프렌치 식당",
-    category: "양식",
-    desc: "아름다운 언덕에서 즐기는 감성있는 양식",
-    link: "https://map.kakao.com/?q=대구%20청라언덕",
-    lat: 35.8640,
-    lng: 128.5920
-  },
-  {
-    name: "참과나무 음식점",
-    category: "한식",
-    desc: "정갈한 한정식과 건강한 음식을 제공하는 식당",
-    link: "https://map.kakao.com/?q=대구%20한정식",
-    lat: 35.8900,
-    lng: 128.6100
-  },
-  {
-    name: "육덕시장 먹자거리",
-    category: "한식",
-    desc: "대구의 또다른 맛, 육덕시장의 알찬 먹자거리",
-    link: "https://map.kakao.com/?q=대구%20육덕시장",
-    lat: 35.8940,
-    lng: 128.5850
-  },
-  {
-    name: "동성로 젊음의거리",
-    category: "한식/양식/카페",
-    desc: "다양한 음식과 문화를 즐길 수 있는 동성로",
-    link: "https://map.kakao.com/?q=대구%20동성로",
-    lat: 35.8760,
-    lng: 128.5980
-  }
+  // 한식 5
+  { name: "서문시장 한식당", category: "한식", desc: "전통 한식을 맛볼 수 있는 서문시장 내 인기식당", link: "https://map.kakao.com/?q=서문시장%20한식" },
+  { name: "오동동 칼국수", category: "한식", desc: "속을 풀어주는 칼칼한 국물의 칼국수 전문점", link: "https://map.kakao.com/?q=오동동%20칼국수" },
+  { name: "동인동 찜갈비", category: "한식", desc: "달큰한 양념의 찜갈비로 유명한 식당", link: "https://map.kakao.com/?q=동인동%20찜갈비" },
+  { name: "평리국밥", category: "한식", desc: "든든한 한 끼, 지역 주민들이 추천하는 국밥집", link: "https://map.kakao.com/?q=평리%20국밥" },
+  { name: "참과나무 한정식", category: "한식", desc: "정갈한 한정식 코스", link: "https://map.kakao.com/?q=참과나무%20한정식" },
+  // 중식 5
+  { name: "중화반점", category: "중식", desc: "현지식 중화요리 전문점", link: "https://map.kakao.com/?q=중화반점" },
+  { name: "복성루", category: "중식", desc: "정통 중국식으로 유명한 동네 맛집", link: "https://map.kakao.com/?q=복성루" },
+  { name: "중화요리 대성", category: "중식", desc: "짬뽕과 탕수육이 인기", link: "https://map.kakao.com/?q=대성%20중화요리" },
+  { name: "하오팅", category: "중식", desc: "퓨전 중식과 정통 면요리", link: "https://map.kakao.com/?q=하오팅" },
+  { name: "천향", category: "중식", desc: "중식 코스와 식사류 균형 좋은 집", link: "https://map.kakao.com/?q=천향" },
+  // 양식 5
+  { name: "청라언덕 비스트로", category: "양식", desc: "감성적인 분위기의 프렌치 비스트로", link: "https://map.kakao.com/?q=청라언덕%20비스트로" },
+  { name: "수성못 레스토랑", category: "양식", desc: "수성못 전망과 함께하는 유럽식 요리", link: "https://map.kakao.com/?q=수성못%20레스토랑" },
+  { name: "이월드 바다뷰 레스토랑", category: "양식", desc: "야경이 예쁜 양식 레스토랑", link: "https://map.kakao.com/?q=이월드%20레스토랑" },
+  { name: "파스타하우스", category: "양식", desc: "수제 파스타와 화덕피자가 인기", link: "https://map.kakao.com/?q=파스타하우스" },
+  { name: "브루클린 스테이크", category: "양식", desc: "스테이크와 와인으로 유명한 곳", link: "https://map.kakao.com/?q=브루클린%20스테이크" },
+  // 디저트 5
+  { name: "반월당 카페거리 카페A", category: "디저트", desc: "감성 카페와 디저트가 모여있는 거리", link: "https://map.kakao.com/?q=반월당%20카페" },
+  { name: "달콤베이커리", category: "디저트", desc: "수제 케이크와 페이스트리가 맛있는 베이커리", link: "https://map.kakao.com/?q=달콤베이커리" },
+  { name: "아이스크림 공방", category: "디저트", desc: "특별한 수제 아이스크림", link: "https://map.kakao.com/?q=아이스크림%20공방" },
+  { name: "테이블 디저트", category: "디저트", desc: "감성 디저트 플레이팅으로 유명한 카페", link: "https://map.kakao.com/?q=테이블%20디저트" },
+  { name: "디저트 라운지", category: "디저트", desc: "다양한 디저트와 티가 있는 라운지", link: "https://map.kakao.com/?q=디저트%20라운지" }
 ];
 
 // 예식장 정보 (사용자 제공 주소/링크)
@@ -184,8 +48,9 @@ function toggleSheet(show) {
   dimmed.classList.toggle("show", show);
 }
 
-function renderRestaurants() {
-  restaurantContainer.innerHTML = restaurantList
+function renderRestaurants(category) {
+  const filtered = restaurantList.filter((r) => r.category === category);
+  restaurantContainer.innerHTML = filtered
     .map(
       (restaurant) => `
         <article class="restaurant-card">
@@ -198,6 +63,17 @@ function renderRestaurants() {
     )
     .join("");
 }
+
+// 탭 이벤트 바인딩
+const tabButtons = document.querySelectorAll(".tab-button");
+tabButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    tabButtons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    const cat = btn.dataset.category;
+    renderRestaurants(cat);
+  });
+});
 
 function copyAccount(accountText) {
   navigator.clipboard.writeText(accountText).then(() => {
@@ -248,7 +124,8 @@ naverMapBtn.addEventListener("click", openNaverMap);
 kakaoMapBtn.addEventListener("click", openKakaoMap);
 tmapBtn.addEventListener("click", openTmap);
 
-renderRestaurants();
+// 초기: 한식 탭 선택
+renderRestaurants("한식");
 
 // 임베드 iframe 및 단축 링크 업데이트
 const mapIframe = document.getElementById("map-iframe");
