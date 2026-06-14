@@ -141,9 +141,8 @@ if (googleLink) googleLink.href = venue.googleShort || googleLink.href;
 if (naverShort) naverShort.href = venue.naverShort || naverShort.href;
 
 // ----------------------
-// Background YouTube music player
+// Background YouTube music player (autoplay on load)
 // ----------------------
-const bgMusicBtn = document.getElementById("bg-music-btn");
 const ytPlayerContainerId = "yt-player"; // div id where YT iframe will be created
 let ytPlayer = null;
 let ytApiReady = false;
@@ -186,7 +185,7 @@ function createPlayer() {
     },
     events: {
       onReady: function (event) {
-        // nothing — play will be triggered by user action
+        // nothing — autoplay handled in load flow
       },
       onStateChange: function (e) {
         // keep loop if ended
@@ -198,39 +197,6 @@ function createPlayer() {
   });
 }
 
-async function toggleBgMusic() {
-  if (!ytPlayer) {
-    await loadYouTubeAPI();
-    createPlayer();
-    // small delay to ensure player initializes
-    setTimeout(() => {
-      if (ytPlayer && ytPlayer.playVideo) {
-        ytPlayer.playVideo();
-        bgMusicBtn.classList.add("playing");
-        bgMusicBtn.textContent = "⏸ 음악 일시정지";
-      }
-    }, 300);
-    return;
-  }
-
-  const state = ytPlayer.getPlayerState();
-  if (state === YT.PlayerState.PLAYING) {
-    ytPlayer.pauseVideo();
-    bgMusicBtn.classList.remove("playing");
-    bgMusicBtn.textContent = "▶ 음악 재생";
-  } else {
-    ytPlayer.playVideo();
-    bgMusicBtn.classList.add("playing");
-    bgMusicBtn.textContent = "⏸ 음악 일시정지";
-  }
-}
-
-if (bgMusicBtn) {
-  bgMusicBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggleBgMusic();
-  });
-}
 
 // 시도: 페이지 로드 시 자동 재생을 시도합니다.
 // 브라우저 정책상 자동 재생이 차단될 수 있으므로, 실패 시 음소거 재생으로 폴백합니다.
@@ -250,8 +216,6 @@ async function autoplayBgMusicOnLoad() {
           if (ytPlayer && ytPlayer.mute) {
             ytPlayer.mute();
             ytPlayer.playVideo();
-            bgMusicBtn.classList.add("playing");
-            bgMusicBtn.textContent = "⏸ 음악 일시정지";
           }
         } catch (err) {}
       }
