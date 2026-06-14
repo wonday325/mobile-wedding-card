@@ -139,6 +139,9 @@ bgAudio.loop = true;
 bgAudio.preload = "auto";
 bgAudio.playsInline = true;
 bgAudio.style.display = "none";
+bgAudio.addEventListener("error", () => {
+  console.error("Audio load error", bgAudio.error);
+});
 document.body.appendChild(bgAudio);
 
 async function autoplayBgAudioOnLoad() {
