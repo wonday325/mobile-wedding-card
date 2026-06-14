@@ -138,33 +138,64 @@ bgAudio.src = audioFilePath;
 bgAudio.loop = true;
 bgAudio.preload = "auto";
 bgAudio.playsInline = true;
+bgAudio.muted = true;
+bgAudio.autoplay = true;
 bgAudio.style.display = "none";
 bgAudio.addEventListener("error", () => {
   console.error("Audio load error", bgAudio.error);
 });
 document.body.appendChild(bgAudio);
+const audioHelp = document.getElementById("audio-help");
 
-async function autoplayBgAudioOnLoad() {
+function showAudioHelp() {
+  if (audioHelp) {
+    audioHelp.classList.add("show");
+  }
+}
+
+function hideAudioHelp() {
+  if (audioHelp) {
+    audioHelp.classList.remove("show");
+  }
+}
+
+async function tryPlayAudio() {
   try {
     await bgAudio.play();
-  } catch (firstError) {
-    try {
-      bgAudio.muted = true;
-      await bgAudio.play();
-      const unmuteOnInteract = async () => {
-        try {
-          bgAudio.muted = false;
-          await bgAudio.play();
-        } catch (e) {
-          // 무시
-        }
-      };
-      document.addEventListener("click", unmuteOnInteract, { once: true, capture: true });
-    } catch (muteError) {
-      // 무시
+    return true;
+  } catch (error) {
+    console.warn("Audio play blocked, retrying with mute", error);
+    return false;
+  }
+}
+
+async function autoplayBgAudioOnLoad() {
+  const firstPlay = await tryPlayAudio();
+  if (!firstPlay) {
+    bgAudio.muted = true;
+    const mutedPlay = await tryPlayAudio();
+    if (mutedPlay) {
+      showAudioHelp();
+    } else {
+      showAudioHelp();
     }
   }
 }
+
+async function attemptUnmute() {
+  if (!bgAudio) return;
+  try {
+    bgAudio.muted = false;
+    await bgAudio.play();
+    hideAudioHelp();
+  } catch (error) {
+    console.warn("Unmute attempt failed", error);
+  }
+}
+
+document.addEventListener("click", () => {
+  attemptUnmute();
+});
 
 window.addEventListener("load", () => {
   autoplayBgAudioOnLoad();
