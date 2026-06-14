@@ -41,7 +41,6 @@ const restaurantContainer = document.getElementById("restaurant-list");
 const copyButtons = document.querySelectorAll(".copy-btn");
 const naverMapBtn = document.getElementById("naver-map");
 const kakaoMapBtn = document.getElementById("kakao-map");
-const tmapBtn = document.getElementById("tmap-map");
 
 function toggleSheet(show) {
   bottomSheet.classList.toggle("show", show);
@@ -101,16 +100,6 @@ function openKakaoMap() {
   setTimeout(() => clearTimeout(timer), 1500);
 }
 
-function openTmap() {
-  // TMap 앱 시도 (일부 기기에서 동작), 웹 폴백은 TMap 검색 페이지
-  const appUrl = `tmap://search?name=${encodeURIComponent(venue.address)}`;
-  // 웹 폴백: 키워드 파라미터로 변경하여 검색 페이지로 연결
-  const webUrl = `https://map.tmap.co.kr/search?keyword=${encodeURIComponent(venue.address)}`;
-
-  const timer = setTimeout(() => (window.location.href = webUrl), 1000);
-  window.location.href = appUrl;
-  setTimeout(() => clearTimeout(timer), 1500);
-}
 
 openButton.addEventListener("click", () => toggleSheet(true));
 closeButton.addEventListener("click", () => toggleSheet(false));
@@ -123,7 +112,6 @@ copyButtons.forEach((btn) => {
 });
 naverMapBtn.addEventListener("click", openNaverMap);
 kakaoMapBtn.addEventListener("click", openKakaoMap);
-tmapBtn.addEventListener("click", openTmap);
 
 // 초기: 한식 탭 선택
 renderRestaurants("한식");
