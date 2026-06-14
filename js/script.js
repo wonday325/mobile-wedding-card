@@ -161,12 +161,12 @@ const restaurantList = [
   }
 ];
 
-// 예식장 좌표 (대구 동구 동촌로 316, M스타하우스웨딩&컨벤션)
-const venueCoords = {
-  lat: 35.8875,
-  lng: 128.6298,
-  name: "M스타하우스웨딩&컨벤션",
-  address: "대구 동구 동촌로 316"
+// 예식장 정보 (사용자 제공 주소/링크)
+const venue = {
+  name: "예식장",
+  address: "대구 동구 방촌동 1113-320",
+  googleShort: "https://maps.app.goo.gl/yEg86E1DB93yxu959",
+  naverShort: "https://naver.me/GQ1liHfC"
 };
 
 const openButton = document.getElementById("open-restaurants");
@@ -206,40 +206,33 @@ function copyAccount(accountText) {
 }
 
 function openNaverMap() {
-  const appUrl = `nmap://navigate?lat=${venueCoords.lat}&lng=${venueCoords.lng}&name=${encodeURIComponent(venueCoords.name)}`;
-  const webUrl = `https://map.naver.com/p/search/${encodeURIComponent(venueCoords.name)}/address`;
-  
-  // 앱이 설치되어 있는지 확인하기 위해 앱 링크 시도
-  const timer = setTimeout(() => {
-    window.location.href = webUrl;
-  }, 1000);
-  
+  // 시도: 앱 스킴 -> 네이버 단축링크(웹)
+  const appUrl = `nmap://search?query=${encodeURIComponent(venue.address)}`;
+  const webUrl = venue.naverShort || `https://map.naver.com/v5/search/${encodeURIComponent(venue.address)}`;
+
+  const timer = setTimeout(() => (window.location.href = webUrl), 1000);
   window.location.href = appUrl;
-  setTimeout(() => clearTimeout(timer), 100);
+  setTimeout(() => clearTimeout(timer), 1500);
 }
 
 function openKakaoMap() {
-  const appUrl = `kakaomap://look?p=${venueCoords.lat},${venueCoords.lng}`;
-  const webUrl = `https://map.kakao.com/link/map/${encodeURIComponent(venueCoords.name)},${venueCoords.lat},${venueCoords.lng}`;
-  
-  const timer = setTimeout(() => {
-    window.location.href = webUrl;
-  }, 1000);
-  
+  // 카카오맵 앱 시도, 웹은 검색 링크로 폴백
+  const appUrl = `kakaomap://search?q=${encodeURIComponent(venue.address)}`;
+  const webUrl = `https://map.kakao.com/link/search/${encodeURIComponent(venue.address)}`;
+
+  const timer = setTimeout(() => (window.location.href = webUrl), 1000);
   window.location.href = appUrl;
-  setTimeout(() => clearTimeout(timer), 100);
+  setTimeout(() => clearTimeout(timer), 1500);
 }
 
 function openTmap() {
-  const appUrl = `tmap://search?name=${encodeURIComponent(venueCoords.name)}&lon=${venueCoords.lng}&lat=${venueCoords.lat}`;
-  const webUrl = `https://map.tmap.co.kr/map/search/${encodeURIComponent(venueCoords.name)}`;
-  
-  const timer = setTimeout(() => {
-    window.location.href = webUrl;
-  }, 1000);
-  
+  // TMap 앱 시도 (일부 기기에서 동작), 웹 폴백은 TMap 검색 페이지
+  const appUrl = `tmap://search?name=${encodeURIComponent(venue.address)}`;
+  const webUrl = `https://map.tmap.co.kr/search?query=${encodeURIComponent(venue.address)}`;
+
+  const timer = setTimeout(() => (window.location.href = webUrl), 1000);
   window.location.href = appUrl;
-  setTimeout(() => clearTimeout(timer), 100);
+  setTimeout(() => clearTimeout(timer), 1500);
 }
 
 openButton.addEventListener("click", () => toggleSheet(true));
@@ -256,3 +249,14 @@ kakaoMapBtn.addEventListener("click", openKakaoMap);
 tmapBtn.addEventListener("click", openTmap);
 
 renderRestaurants();
+
+// 임베드 iframe 및 단축 링크 업데이트
+const mapIframe = document.getElementById("map-iframe");
+const googleLink = document.getElementById("google-map-link");
+const naverShort = document.getElementById("naver-short-link");
+if (mapIframe) {
+  const q = encodeURIComponent(venue.address);
+  mapIframe.src = `https://www.google.com/maps?q=${q}&output=embed`;
+}
+if (googleLink) googleLink.href = venue.googleShort || googleLink.href;
+if (naverShort) naverShort.href = venue.naverShort || naverShort.href;
