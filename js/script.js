@@ -129,100 +129,40 @@ if (googleLink) googleLink.href = venue.googleShort || googleLink.href;
 if (naverShort) naverShort.href = venue.naverShort || naverShort.href;
 
 // ----------------------
-// Background YouTube music player (autoplay on load)
+// Background local MP3 music player (autoplay on load)
 // ----------------------
-const ytPlayerContainerId = "yt-player"; // div id where YT iframe will be created
-let ytPlayer = null;
-let ytApiReady = false;
-const ytVideoId = "SAHWUw81FEY"; // user-selected YouTube video id
-const ytStartSec = 12; // start time from link
+const audioFilePath = "audio/background.mp3";
+const bgAudio = document.createElement("audio");
+bgAudio.id = "bg-audio";
+bgAudio.src = audioFilePath;
+bgAudio.loop = true;
+bgAudio.preload = "auto";
+bgAudio.playsInline = true;
+bgAudio.style.display = "none";
+document.body.appendChild(bgAudio);
 
-function loadYouTubeAPI() {
-  if (window.YT) {
-    ytApiReady = true;
-    return Promise.resolve();
-  }
-  return new Promise((resolve) => {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    window.onYouTubeIframeAPIReady = function () {
-      ytApiReady = true;
-      resolve();
-    };
-  });
-}
-
-function createPlayer() {
-  if (!ytApiReady) return;
-  if (ytPlayer) return;
-  ytPlayer = new YT.Player(ytPlayerContainerId, {
-    height: "0",
-    width: "0",
-    videoId: ytVideoId,
-    playerVars: {
-      autoplay: 0,
-      controls: 0,
-      modestbranding: 1,
-      rel: 0,
-      start: ytStartSec,
-      mute: 0,
-      loop: 1,
-      playlist: ytVideoId
-    },
-    events: {
-      onReady: function (event) {
-        // nothing — autoplay handled in load flow
-      },
-      onStateChange: function (e) {
-        // keep loop if ended
-        if (e.data === YT.PlayerState.ENDED) {
-          ytPlayer.playVideo();
-        }
-      }
-    }
-  });
-}
-
-
-// 시도: 페이지 로드 시 자동 재생을 시도합니다.
-// 브라우저 정책상 자동 재생이 차단될 수 있으므로, 실패 시 음소거 재생으로 폴백합니다.
-async function autoplayBgMusicOnLoad() {
+async function autoplayBgAudioOnLoad() {
   try {
-    await loadYouTubeAPI();
-    createPlayer();
-    // 잠깐 대기 후 재생 시도
-    setTimeout(() => {
-      try {
-        if (ytPlayer && ytPlayer.playVideo) {
-          ytPlayer.playVideo();
-        }
-      } catch (e) {
-        // 재생 실패하면 음소거로 시도
+    await bgAudio.play();
+  } catch (firstError) {
+    try {
+      bgAudio.muted = true;
+      await bgAudio.play();
+      const unmuteOnInteract = async () => {
         try {
-          if (ytPlayer && ytPlayer.mute) {
-            ytPlayer.mute();
-            ytPlayer.playVideo();
-          }
-        } catch (err) {}
-      }
-    }, 400);
-
-    // 사용자 상호작용 시 음소거 해제 시도
-    const unmuteOnInteract = () => {
-      try {
-        if (ytPlayer && ytPlayer.unMute) {
-          ytPlayer.unMute();
+          bgAudio.muted = false;
+          await bgAudio.play();
+        } catch (e) {
+          // 무시
         }
-      } catch (e) {}
-    };
-    document.addEventListener("click", unmuteOnInteract, { once: true, capture: true });
-  } catch (e) {
-    // 무시
+      };
+      document.addEventListener("click", unmuteOnInteract, { once: true, capture: true });
+    } catch (muteError) {
+      // 무시
+    }
   }
 }
 
 window.addEventListener("load", () => {
-  autoplayBgMusicOnLoad();
+  autoplayBgAudioOnLoad();
 });
