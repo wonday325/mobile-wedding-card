@@ -11,6 +11,9 @@
     <main class="page-container">
       <section class="hero-card">
         <p class="eyebrow">한 생을 함께하겠습니다</p>
+        <div class="music-control">
+          <button id="bg-music-btn" class="music-btn" type="button" aria-pressed="false">▶ 음악 재생</button>
+        </div>
         <p class="message">
           저희의 결혼식에 와주셔서 함께해 주시면 한없이 감사하겠습니다.
           부족하지만 저희 행복의 모습을 보여드리겠습니다.
@@ -135,6 +138,9 @@
       </div>
       <div id="restaurant-list" class="restaurant-list"></div>
     </aside>
+
+    <!-- YouTube player container (hidden) -->
+    <div id="yt-player" style="width:0;height:0;overflow:hidden;position:absolute;left:-9999px;" aria-hidden="true"></div>
 
 
     <script src="js/script.js"></script>

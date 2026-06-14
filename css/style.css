@@ -214,6 +214,25 @@ h1 {
   display: block;
 }
 
+.music-control {
+  margin-top: 12px;
+}
+
+.music-btn {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(212,165,116,0.12);
+  border: 1px solid rgba(212,165,116,0.18);
+  color: var(--color-text);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.music-btn.playing {
+  background: linear-gradient(135deg, #d4a574 0%, #c17a5c 100%);
+  color: var(--color-white);
+}
+
 .map-links {
   margin-top: 10px;
   display: flex;

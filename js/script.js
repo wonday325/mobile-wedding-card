@@ -138,3 +138,95 @@ if (mapIframe) {
 }
 if (googleLink) googleLink.href = venue.googleShort || googleLink.href;
 if (naverShort) naverShort.href = venue.naverShort || naverShort.href;
+
+// ----------------------
+// Background YouTube music player
+// ----------------------
+const bgMusicBtn = document.getElementById("bg-music-btn");
+const ytPlayerContainerId = "yt-player"; // div id where YT iframe will be created
+let ytPlayer = null;
+let ytApiReady = false;
+const ytVideoId = "SAHWUw81FEY"; // user-selected YouTube video id
+const ytStartSec = 12; // start time from link
+
+function loadYouTubeAPI() {
+  if (window.YT) {
+    ytApiReady = true;
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    window.onYouTubeIframeAPIReady = function () {
+      ytApiReady = true;
+      resolve();
+    };
+  });
+}
+
+function createPlayer() {
+  if (!ytApiReady) return;
+  if (ytPlayer) return;
+  ytPlayer = new YT.Player(ytPlayerContainerId, {
+    height: "0",
+    width: "0",
+    videoId: ytVideoId,
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      modestbranding: 1,
+      rel: 0,
+      start: ytStartSec,
+      mute: 0,
+      loop: 1,
+      playlist: ytVideoId
+    },
+    events: {
+      onReady: function (event) {
+        // nothing — play will be triggered by user action
+      },
+      onStateChange: function (e) {
+        // keep loop if ended
+        if (e.data === YT.PlayerState.ENDED) {
+          ytPlayer.playVideo();
+        }
+      }
+    }
+  });
+}
+
+async function toggleBgMusic() {
+  if (!ytPlayer) {
+    await loadYouTubeAPI();
+    createPlayer();
+    // small delay to ensure player initializes
+    setTimeout(() => {
+      if (ytPlayer && ytPlayer.playVideo) {
+        ytPlayer.playVideo();
+        bgMusicBtn.classList.add("playing");
+        bgMusicBtn.textContent = "⏸ 음악 일시정지";
+      }
+    }, 300);
+    return;
+  }
+
+  const state = ytPlayer.getPlayerState();
+  if (state === YT.PlayerState.PLAYING) {
+    ytPlayer.pauseVideo();
+    bgMusicBtn.classList.remove("playing");
+    bgMusicBtn.textContent = "▶ 음악 재생";
+  } else {
+    ytPlayer.playVideo();
+    bgMusicBtn.classList.add("playing");
+    bgMusicBtn.textContent = "⏸ 음악 일시정지";
+  }
+}
+
+if (bgMusicBtn) {
+  bgMusicBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleBgMusic();
+  });
+}
