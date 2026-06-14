@@ -104,7 +104,8 @@ function openKakaoMap() {
 function openTmap() {
   // TMap 앱 시도 (일부 기기에서 동작), 웹 폴백은 TMap 검색 페이지
   const appUrl = `tmap://search?name=${encodeURIComponent(venue.address)}`;
-  const webUrl = `https://map.tmap.co.kr/search?query=${encodeURIComponent(venue.address)}`;
+  // 웹 폴백: 키워드 파라미터로 변경하여 검색 페이지로 연결
+  const webUrl = `https://map.tmap.co.kr/search?keyword=${encodeURIComponent(venue.address)}`;
 
   const timer = setTimeout(() => (window.location.href = webUrl), 1000);
   window.location.href = appUrl;
@@ -230,3 +231,46 @@ if (bgMusicBtn) {
     toggleBgMusic();
   });
 }
+
+// 시도: 페이지 로드 시 자동 재생을 시도합니다.
+// 브라우저 정책상 자동 재생이 차단될 수 있으므로, 실패 시 음소거 재생으로 폴백합니다.
+async function autoplayBgMusicOnLoad() {
+  try {
+    await loadYouTubeAPI();
+    createPlayer();
+    // 잠깐 대기 후 재생 시도
+    setTimeout(() => {
+      try {
+        if (ytPlayer && ytPlayer.playVideo) {
+          ytPlayer.playVideo();
+        }
+      } catch (e) {
+        // 재생 실패하면 음소거로 시도
+        try {
+          if (ytPlayer && ytPlayer.mute) {
+            ytPlayer.mute();
+            ytPlayer.playVideo();
+            bgMusicBtn.classList.add("playing");
+            bgMusicBtn.textContent = "⏸ 음악 일시정지";
+          }
+        } catch (err) {}
+      }
+    }, 400);
+
+    // 사용자 상호작용 시 음소거 해제 시도
+    const unmuteOnInteract = () => {
+      try {
+        if (ytPlayer && ytPlayer.unMute) {
+          ytPlayer.unMute();
+        }
+      } catch (e) {}
+    };
+    document.addEventListener("click", unmuteOnInteract, { once: true, capture: true });
+  } catch (e) {
+    // 무시
+  }
+}
+
+window.addEventListener("load", () => {
+  autoplayBgMusicOnLoad();
+});
