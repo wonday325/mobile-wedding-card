@@ -133,7 +133,8 @@ const googleLink = document.getElementById("google-map-link");
 const naverShort = document.getElementById("naver-short-link");
 if (mapIframe) {
   const q = encodeURIComponent(venue.address);
-  mapIframe.src = `https://www.google.com/maps?q=${q}&output=embed`;
+  // Google Maps Search 형태로 쿼리하여 주소 중심으로 표시
+  mapIframe.src = `https://www.google.com/maps/search/?api=1&query=${q}&hl=ko`;
 }
 if (googleLink) googleLink.href = venue.googleShort || googleLink.href;
 if (naverShort) naverShort.href = venue.naverShort || naverShort.href;
